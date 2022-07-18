@@ -1,2 +1,6 @@
 data/TreatedEdgeList
 scripts/check_affiliation2.csv
+*/.DS_Store
+.envrc
+data-computed-MAG/
+scripts/scripts2/

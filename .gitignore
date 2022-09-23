@@ -1,7 +1,10 @@
 data/TreatedEdgeList
 scripts/check_affiliation2.csv
 */.DS_Store
+.DS_Store
 .envrc
 data-computed-MAG/
 scripts/scripts2/
 dev/
+notebook_latest/
+notebook_old/

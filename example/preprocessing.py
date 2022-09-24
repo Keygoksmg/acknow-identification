@@ -40,34 +40,34 @@ class Preprocessing:
         v_db_paper_refPaper = vaex.open(self._csv_or_hdf5(self.file_db_paper_refPaper))
         
         # column check
-        assert 'AuthorId' in list(v_db_author.columns), f"v_db_author shold have at least the columns of [AuthorId, DisplayName]. Now it has {list(v_db_author.columns)}"
-        assert 'DisplayName' in list(v_db_author.columns), f"v_db_author shold have at least the columns of [AuthorId, DisplayName]. Now it has {list(v_db_author.columns)}"
+        assert 'AuthorId' in list(v_db_author.columns), f"v_db_author should have at least the columns of [AuthorId, DisplayName]. Now it has {list(v_db_author.columns)}"
+        assert 'DisplayName' in list(v_db_author.columns), f"v_db_author should have at least the columns of [AuthorId, DisplayName]. Now it has {list(v_db_author.columns)}"
         
-        assert 'PaperId' in list(v_db_paper_author.columns), f"v_db_paper_author shold have at least the columns of [PaperId, AuthorId]. Now it has {list(v_db_paper_author.columns)}"
-        assert 'AuthorId' in list(v_db_paper_author.columns), f"v_db_paper_author shold have at least the columns of [PaperId, AuthorId]. Now it has {list(v_db_paper_author.columns)}"
+        assert 'PaperId' in list(v_db_paper_author.columns), f"v_db_paper_author should have at least the columns of [PaperId, AuthorId]. Now it has {list(v_db_paper_author.columns)}"
+        assert 'AuthorId' in list(v_db_paper_author.columns), f"v_db_paper_author should have at least the columns of [PaperId, AuthorId]. Now it has {list(v_db_paper_author.columns)}"
 
-        assert 'PaperId' in list(v_db_paper_refPaper.columns), f"v_db_paper_refPaper shold have at least the columns of [PaperId, Rfpid]. Now it has {list(v_db_paper_refPaper.columns)}"
-        assert 'Rfpid' in list(v_db_paper_refPaper.columns), f"v_db_paper_refPaper shold have at least the columns of [PaperId, Rfpid]. Now it has {list(v_db_paper_refPaper.columns)}"
+        assert 'PaperId' in list(v_db_paper_refPaper.columns), f"v_db_paper_refPaper should have at least the columns of [PaperId, Rfpid]. Now it has {list(v_db_paper_refPaper.columns)}"
+        assert 'Rfpid' in list(v_db_paper_refPaper.columns), f"v_db_paper_refPaper should have at least the columns of [PaperId, Rfpid]. Now it has {list(v_db_paper_refPaper.columns)}"
     
         return v_db_author, v_db_paper_author, v_db_paper_refPaper, 
 
     def adjust_df_acknow(self):
         """
-        - df_acknow shold have at least the columns of [Doi, AcknowName]. (Here, AcknowName = Acknoweldged scholar name).
+        - df_acknow should have at least the columns of [Doi, AcknowName]. (Here, AcknowName = Acknowledged scholar name).
         - AcknowName should be separated by '_'. e.g., "Hanah_Margalit"
         """
         def _column_name_heck():
             # check for df_acknow
-            assert 'Doi' in self.df_acknow.columns, f"df_acknow shold have at least the columns of [Doi, AcknowName]. Now it has {self.df_acknow.columns}"
-            assert 'AcknowName' in self.df_acknow.columns, f"df_acknow shold have at least the columns of [Doi, AcknowName]. Now it has {self.df_acknow.columns}"
+            assert 'Doi' in self.df_acknow.columns, f"df_acknow should have at least the columns of [Doi, AcknowName]. Now it has {self.df_acknow.columns}"
+            assert 'AcknowName' in self.df_acknow.columns, f"df_acknow should have at least the columns of [Doi, AcknowName]. Now it has {self.df_acknow.columns}"
 
             # check for df_doi_paperId
-            assert 'Doi' in self.df_doi_paperId.columns, f"df_doi_paperId shold have at least the columns of [Doi, PaperId]. Now it has {self.df_doi_paperId.columns}"
-            assert 'PaperId' in self.df_doi_paperId.columns, f"df_doi_paperId shold have at least the columns of [Doi, PaperId]. Now it has {self.df_doi_paperId.columns}"
+            assert 'Doi' in self.df_doi_paperId.columns, f"df_doi_paperId should have at least the columns of [Doi, PaperId]. Now it has {self.df_doi_paperId.columns}"
+            assert 'PaperId' in self.df_doi_paperId.columns, f"df_doi_paperId should have at least the columns of [Doi, PaperId]. Now it has {self.df_doi_paperId.columns}"
             
 
         def _adjast_acknow_name():
-            """Since in MAG's author data, DisplayName have data such as 'Flavio Roces'. So adjust to this data type.
+            """Since in MAG's author data, DisplayName has data such as 'Flavio Roces'. So adjust to this data type.
             """
             self.df_acknow['AcknowName'] = self.df_acknow['AcknowName'].apply(lambda x: " ".join(x.split('_')))
 

@@ -5,12 +5,18 @@ import numpy as np
 
 class Detector:
     """
-    AuthorId fully depends on which DB you use. In the article, MAG(Microsoft Academic Graph) is used.
-    We only requires DOI and list(set) of acknowledged scholar names.
-    By inserting those 2 infomration into the DB, we will get author's ID, possible scholarly IDs having the acknoweldged scholar names.
-    Then, going through the algorithm proposed in the aritcle, we identify the acknowledged scholar ID.
-    This method require the hypothesis that using DB(in this case MAG) has solved sophisticated name disambiguation problem about the authors names, and idea that acknoweldged scholars have academic records in the DB.
-    Conversely, acknowledged individual whose records do not exist in DB cannot be detected. Theoretically, acknowledged scholars who have not collaboarted with acknowledging authors nor being cited in the acknowledging artcle also cannot be indentified. 
+    This class implements core argorthm (see [article](https://www.nature.com/articles/s41597-022-01585-y)). 
+
+    AuthorId entirely depends on which DB you use. In the article, MAG(Microsoft Academic Graph) is used.
+    We only require DOI and acknowledged scholar names.
+
+    By inserting them into the DB, we will get possible scholarly IDs having the acknowledged scholar names.
+    Then, going through the algorithm proposed in the article, we identify the acknowledged scholar ID.
+    This method requires the hypothesis that DB(in this case MAG) has solved name disambiguation problems 
+    about the author's names with a well-developed algorithm and idea that acknowledged scholars have academic records in the DB.
+
+    Conversely, acknowledged individuals whose records do not exist in DB cannot be detected (e.g., parents and private friends).
+    As another limitation, acknowledged scholars who have not collaborated with acknowledging authors or have not been cited in the article also cannot be identified.  
     """
 
     def __init__(self, df_acknow, db_author, db_paper_author, db_paper_refPaper, save_file='', log=False):
@@ -29,9 +35,9 @@ class Detector:
         print('Start possible scholar Id search')
         time_sta = time.time()
         """
-        This class find possible scholar ID only by names.
-        Currently, we only search by exact name matching between the given data and DB.
-        For example, if we have the name "Keigo Kusumegi", we look for the scholar IDs that contain this name.
+        This class finds possible scholar ID only by names.
+        We only search by exact name matching between the given data and DB.
+        For example, if we have the name "Keigo Kusumegi," we look for the scholar IDs that contain this name.
 
         REQUIRE:
             self.df_acknow, self.vaex_author
@@ -68,12 +74,12 @@ class Detector:
 
     def collaboration_approach(self, possible_acknow_ids, df_acknow_possibleIds_grouped):
         """
-        Goal is to create authors' and collaborators' ID dataset. such as {authorId: [collaboraterIds]}.
+        The goal is to create authors' and collaborators' ID datasets. such as {authorId: [collaboraterIds]}.
 
         sub  STEP 1. find target authorsIds
         sub  STEP 2. author: [published_paperIds]
         sub  STEP 3. published_paperId: [collaboratorIds]  *collaboratorIds==authorsIds
-        sub  STEP 4. mergeing 2. & 3., create author: [collaboratorIds]
+        sub  STEP 4. merging 2. & 3., create author: [collaboratorIds]
         """
         print('Start collaboration_approach')
         time_sta = time.time()
